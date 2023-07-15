@@ -51,3 +51,13 @@ unsubscribe()
 store.dispatch({ type: 'todos/todoAdded', payload: 'Try creating a store' })
 
 // Omit existing React rendering logic
+
+// Remember, every time we call store.dispatch(action):
+
+//     The store calls rootReducer(state, action)
+//         That root reducer may call other slice reducers inside of itself, like todosReducer(state.todos, action)
+//     The store saves the new state value inside
+//     The store calls all the listener subscription callbacks
+//     If a listener has access to the store, it can now call store.getState() to read the latest state value
+
+// If we look at the console log output from that example, you can see how the Redux state changes as each action was dispatched:
