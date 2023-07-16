@@ -51,16 +51,39 @@ export default function todosReducer(state = initialState, action) {
   }
 }
 
-// Thunk function
-export async function fetchTodos(dispatch, getState) {
-  const response = await client.get('/fakeApi/todos')
-  dispatch({ type: 'todos/todosLoaded', payload: response.todos })
+export const todosLoaded = todos => {
+  return {
+    type: 'todos/todosLoaded',
+    payload: todos
+  }
 }
+
+export const todoAdded = todo => {
+  return {
+    type: 'todos/todoAdded',
+    payload: todo
+  }
+}
+//export const todoAdded = todo => ({ type: 'todos/todoAdded', payload: todo })
+
+// Thunk function
+export function fetchTodos() {
+  return async function fetchTodosThunk(dispatch, getState) {
+    const response = await client.get('/fakeApi/todos')
+    dispatch(todosLoaded(response.todos))
+  }
+}
+
+// // Same thing as the above example!
+// export const fetchTodos = () => async dispatch => {
+//   const response = await client.get('/fakeApi/todos')
+//   dispatch(todosLoaded(response.todos))
+// }
 
 export function saveNewTodo(text) {
   return async function saveNewTodoThunk(dispatch, getState) {
     const initialTodo = { text }
     const response = await client.post('/fakeApi/todos', { todo: initialTodo })
-    dispatch({ type: 'todos/todoAdded', payload: response.todo })
+    dispatch(todoAdded(response.todo))
   }
 }
