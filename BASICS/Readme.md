@@ -29,3 +29,12 @@ The Redux store brings together the state, actions, and reducers that make up yo
     Handles unregistering of listeners via the unsubscribe function returned by store.subscribe(listener).
 
 It's important to note that you'll only have a single store in a Redux application. When you want to split your data handling logic, you'll use reducer composition and create multiple reducers that can be combined together, instead of creating separate stores.
+
+
+<!-- ----------------------------------------------------------------------- -->
+<!--                               MiddleWare                                -->
+<!-- ----------------------------------------------------------------------- -->
+Redux middleware provides a third-party extension point between dispatching an action, and the moment it reaches the reducer.
+
+
+We already saw that you can customize a Redux store using store enhancers. Redux middleware are actually implemented on top of a very special store enhancer that comes built in with Redux, called applyMiddleware.

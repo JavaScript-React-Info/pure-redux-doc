@@ -1,5 +1,5 @@
 
-import {createStore, compose} from 'redux'
+import {createStore, compose, applyMiddleware} from 'redux'
 import { includeMeaningOfLife, sayHiOnDispatch } from './exampleAddons/enhancers'
 import rootReducer from './reducer'
 
@@ -25,12 +25,29 @@ import rootReducer from './reducer'
 //createStore only accepts one enhancer as its third argument
 //  the Redux core includes a compose function that can be used to merge multiple enhancers together
 
-const composedEnhancer = compose(sayHiOnDispatch, includeMeaningOfLife);
+// const composedEnhancer = compose(sayHiOnDispatch, includeMeaningOfLife);
 
-const store = createStore(rootReducer, undefined, composedEnhancer);
+// const store = createStore(rootReducer, undefined, composedEnhancer);
 
-export default store;
+// export default store;
 
 
 // If you don't have any preloadedState to pass in, you can pass the enhancer as the second argument instead:
 // const store = createStore(rootReducer, storeEnhancer)
+
+// Enhancers are powerful because they can override or replace any of the store's methods: dispatch, getState, and subscribe.
+
+// But, much of the time, we only need to customize how dispatch behaves. It would be nice if there was a way to add some customized behavior when dispatch runs.
+
+
+/* -------------------------------------------------------------------------- */
+/*                                 middleware                                 */
+/* -------------------------------------------------------------------------- */
+import { print1, print2, print3 } from './exampleAddons/middleware'
+
+const middlewareEnhancer = applyMiddleware(print1, print2, print3)
+
+// Pass enhancer as the second arg, since there's no preloadedState
+const store = createStore(rootReducer, middlewareEnhancer)
+
+export default store

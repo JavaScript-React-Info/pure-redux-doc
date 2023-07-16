@@ -10,9 +10,16 @@ import store from "./store";
 // console.log('Dispatch Complete');
 
 
-store.dispatch({ type: 'todos/todoAdded', payload: 'Learn about actions' })
-// log: 'Hi!'
+// store.dispatch({ type: 'todos/todoAdded', payload: 'Learn about actions' })
+// // log: 'Hi!'
 
-console.log('State after dispatch: ', store.getState())
-// log: {todos: [...], filters: {status, colors}, meaningOfLife: 42}
+// console.log('State after dispatch: ', store.getState())
+// // log: {todos: [...], filters: {status, colors}, meaningOfLife: 42}
+
+
+/* ------------------------------- middelware ------------------------------- */
+store.dispatch({ type: 'todos/todoAdded', payload: 'Learn about actions' })
+// log: '1'
+// log: '2'
+// log: '3'
 
