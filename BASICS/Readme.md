@@ -55,3 +55,21 @@ A middleware can do anything it wants when it sees a dispatched action:
 and anything else you can think of.
 
 In particular, middleware are intended to contain logic with side effects. In addition, middleware can modify dispatch to accept things that are not plain action objects. We'll talk more about both of these in Part 6: Async Logic.
+
+
+<!-- ----------------------------------------------------------------------- -->
+<!--                             Redux devtools                              -->
+<!-- ----------------------------------------------------------------------- -->
+import { createStore, applyMiddleware } from 'redux'
+import { composeWithDevTools } from 'redux-devtools-extension'
+import rootReducer from './reducer'
+import { print1, print2, print3 } from './exampleAddons/middleware'
+
+const composedEnhancer = composeWithDevTools(
+  // EXAMPLE: Add whatever middleware you actually want to use here
+  applyMiddleware(print1, print2, print3)
+  // other store enhancers if any
+)
+
+const store = createStore(rootReducer, composedEnhancer)
+export default store
