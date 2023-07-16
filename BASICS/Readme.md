@@ -73,3 +73,10 @@ const composedEnhancer = composeWithDevTools(
 
 const store = createStore(rootReducer, composedEnhancer)
 export default store
+
+
+<!-- ----------------------------------------------------------------------- -->
+<!--                      async logic and data fetching                      -->
+<!-- ----------------------------------------------------------------------- -->
+Any asynchronicity has to happen outside the store.
+Redux middleware were designed to enable writing logic that has side effects.
