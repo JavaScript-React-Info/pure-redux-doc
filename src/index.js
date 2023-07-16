@@ -1,25 +1,15 @@
-import store from "./store";
+import React from 'react'
+import ReactDOM from 'react-dom'
+import './index.css'
+import App from './App'
 
-// sayHiOnDispatch: an enhancer that always logs 'Hi'! to the console every time an action is dispatched
-// includeMeaningOfLife: an enhancer that always adds the field meaningOfLife: 42 to the value returned from getState()
+import './api/server'
 
+import store from './store'
 
-
-// console.log('Dispatching actions');
-// store.dispatch({type: 'todos/todoAdded', payload: 'Learn acout actions'});
-// console.log('Dispatch Complete');
-
-
-// store.dispatch({ type: 'todos/todoAdded', payload: 'Learn about actions' })
-// // log: 'Hi!'
-
-// console.log('State after dispatch: ', store.getState())
-// // log: {todos: [...], filters: {status, colors}, meaningOfLife: 42}
-
-
-/* ------------------------------- middelware ------------------------------- */
-store.dispatch({ type: 'todos/todoAdded', payload: 'Learn about actions' })
-// log: '1'
-// log: '2'
-// log: '3'
-
+ReactDOM.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+  document.getElementById('root')
+)

@@ -5,18 +5,18 @@ import rootReducer from './reducer'
 
 //createStore can also accept a preloadedState value as its second argument. You could use this to add initial data when the store is created, such as values that were included in an HTML page sent from the server, or persisted in localStorage and read back when the user visits the page again, like this:
 
-// let preloadedState
-// const persistedTodosString = localStorage.getItem('todos')
+let preloadedState
+const persistedTodosString = localStorage.getItem('todos')
 
-// if (persistedTodosString) {
-//   preloadedState = {
-//     todos: JSON.parse(persistedTodosString)
-//   }
-// }
+if (persistedTodosString) {
+  preloadedState = {
+    todos: JSON.parse(persistedTodosString)
+  }
+}
 
-// const store = createStore(rootReducer, preloadedState)
+const store = createStore(rootReducer, preloadedState)
 
-// export default store;
+export default store;
 
 // const store = createStore(rootReducer, undefined, sayHiOnDispatch);
 // export default store;
@@ -55,33 +55,33 @@ import rootReducer from './reducer'
 /* -------------------------------------------------------------------------- */
 /*                              custom middleware                             */
 /* -------------------------------------------------------------------------- */
-const loggerMiddleware = storeAPI => next => action => {
-    console.log('dispatching', action)
-    let result = next(action)
-    console.log('next state', storeAPI.getState())
-    return result
-  }
+// const loggerMiddleware = storeAPI => next => action => {
+//     console.log('dispatching', action)
+//     let result = next(action)
+//     console.log('next state', storeAPI.getState())
+//     return result
+//   }
 
-//-----------------
-const alwaysReturnHelloMiddleware = storeAPI => next => action => {
-    const originalResult = next(action)
-    // Ignore the original result, return something else
-    return 'Hello!'
-  }
+// //-----------------
+// const alwaysReturnHelloMiddleware = storeAPI => next => action => {
+//     const originalResult = next(action)
+//     // Ignore the original result, return something else
+//     return 'Hello!'
+//   }
   
-  const middlewareEnhancer = applyMiddleware(alwaysReturnHelloMiddleware)
-  const store = createStore(rootReducer, middlewareEnhancer)
+//   const middlewareEnhancer = applyMiddleware(alwaysReturnHelloMiddleware)
+//   const store = createStore(rootReducer, middlewareEnhancer)
   
-  const dispatchResult = store.dispatch({ type: 'some/action' })
-  console.log(dispatchResult)
-  // log: 'Hello!'
-//--------------------------
-const delayedMessageMiddleware = storeAPI => next => action => {
-    if (action.type === 'todos/todoAdded') {
-      setTimeout(() => {
-        console.log('Added a new todo: ', action.payload)
-      }, 1000)
-    }
+//   const dispatchResult = store.dispatch({ type: 'some/action' })
+//   console.log(dispatchResult)
+//   // log: 'Hello!'
+// //--------------------------
+// const delayedMessageMiddleware = storeAPI => next => action => {
+//     if (action.type === 'todos/todoAdded') {
+//       setTimeout(() => {
+//         console.log('Added a new todo: ', action.payload)
+//       }, 1000)
+//     }
   
-    return next(action)
-  }
+//     return next(action)
+//   }
