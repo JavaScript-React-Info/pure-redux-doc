@@ -1,5 +1,7 @@
 
-import {createStore, compose, applyMiddleware} from 'redux'
+import {createStore, compose, applyMiddleware} from 'redux';
+import thunkMiddleware from 'redux-thunk'
+import { composeWithDevTools } from 'redux-devtools-extension'
 import { includeMeaningOfLife, sayHiOnDispatch } from './exampleAddons/enhancers'
 import rootReducer from './reducer'
 
@@ -14,7 +16,9 @@ if (persistedTodosString) {
   }
 }
 
-const store = createStore(rootReducer, preloadedState)
+const composedEnhancer = composeWithDevTools(applyMiddleware(thunkMiddleware))
+
+const store = createStore(rootReducer, composedEnhancer)
 
 export default store;
 

@@ -80,3 +80,11 @@ export default store
 <!-- ----------------------------------------------------------------------- -->
 Any asynchronicity has to happen outside the store.
 Redux middleware were designed to enable writing logic that has side effects.
+
+
+
+
+<!-- ----------------------------------------------------------------------- -->
+<!--                    Using the Redux Thunk Middleware                     -->
+<!-- ----------------------------------------------------------------------- -->
+As it turns out, Redux already has an official version of that "async function middleware", called the Redux "Thunk" middleware. The thunk middleware allows us to write functions that get dispatch and getState as arguments. The thunk functions can have any async logic we want inside, and that logic can dispatch actions and read the store state as needed.
