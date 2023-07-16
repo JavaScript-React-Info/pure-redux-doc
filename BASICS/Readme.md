@@ -88,3 +88,41 @@ Redux middleware were designed to enable writing logic that has side effects.
 <!--                    Using the Redux Thunk Middleware                     -->
 <!-- ----------------------------------------------------------------------- -->
 As it turns out, Redux already has an official version of that "async function middleware", called the Redux "Thunk" middleware. The thunk middleware allows us to write functions that get dispatch and getState as arguments. The thunk functions can have any async logic we want inside, and that logic can dispatch actions and read the store state as needed.
+
+
+<!-- ----------------------------------------------------------------------- -->
+<!--                           Memoized Selectors                            -->
+<!-- ----------------------------------------------------------------------- -->
+We've already seen that we can write "selector" functions, which accept the Redux state object as an argument, and return a value:
+
+const selectTodos = state => state.todos
+
+What if we need to derive some data? For example, maybe we want to have an array of only the todo IDs:
+
+const selectTodoIds = state => state.todos.map(todo => todo.id)
+
+However, array.map() always returns a new array reference. We know that the React-Redux useSelector hook will re-run its selector function after every dispatched action, and if the selector result changes, it will force the component to re-render.
+
+In this example, calling useSelector(selectTodoIds) will always cause the component to re-render after every action, because it's returning a new array reference!
+
+In Part 5, we saw that we can pass shallowEqual as an argument to useSelector. There's another option here, though: we could use "memoized" selectors.
+
+Memoization is a kind of caching - specifically, saving the results of an expensive calculation, and reusing those results if we see the same inputs later.
+
+Memoized selector functions are selectors that save the most recent result value, and if you call them multiple times with the same inputs, will return the same result value. If you call them with different inputs than last time, they will recalculate a new result value, cache it, and return the new result.
+
+<!-- ----------------------------------------------------------------------- -->
+<!--                 Memoizing Selectors with createSelector                 -->
+<!-- ----------------------------------------------------------------------- -->
+The Reselect library provides a createSelector API that will generate memoized selector functions. createSelector accepts one or more "input selector" functions as arguments, plus an "output selector", and returns the new selector function. Every time you call the selector:
+
+    All "input selectors" are called with all of the arguments
+    If any of the input selector return values have changed, the "output selector" will re-run
+    All of the input selector results become arguments to the output selector
+    The final result of the output selector is cached for next time
+
+Let's create a memoized version of selectTodoIds and use that with our <TodoList>.
+
+First, we need to install Reselect:
+
+npm install reselect
