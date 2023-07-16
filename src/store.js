@@ -30,3 +30,7 @@ const composedEnhancer = compose(sayHiOnDispatch, includeMeaningOfLife);
 const store = createStore(rootReducer, undefined, composedEnhancer);
 
 export default store;
+
+
+// If you don't have any preloadedState to pass in, you can pass the enhancer as the second argument instead:
+// const store = createStore(rootReducer, storeEnhancer)
