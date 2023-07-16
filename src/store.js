@@ -43,11 +43,45 @@ import rootReducer from './reducer'
 /* -------------------------------------------------------------------------- */
 /*                                 middleware                                 */
 /* -------------------------------------------------------------------------- */
-import { print1, print2, print3 } from './exampleAddons/middleware'
+// import { print1, print2, print3 } from './exampleAddons/middleware'
 
-const middlewareEnhancer = applyMiddleware(print1, print2, print3)
+// const middlewareEnhancer = applyMiddleware(print1, print2, print3)
 
-// Pass enhancer as the second arg, since there's no preloadedState
-const store = createStore(rootReducer, middlewareEnhancer)
+// // Pass enhancer as the second arg, since there's no preloadedState
+// const store = createStore(rootReducer, middlewareEnhancer)
 
-export default store
+// export default store
+
+/* -------------------------------------------------------------------------- */
+/*                              custom middleware                             */
+/* -------------------------------------------------------------------------- */
+const loggerMiddleware = storeAPI => next => action => {
+    console.log('dispatching', action)
+    let result = next(action)
+    console.log('next state', storeAPI.getState())
+    return result
+  }
+
+//-----------------
+const alwaysReturnHelloMiddleware = storeAPI => next => action => {
+    const originalResult = next(action)
+    // Ignore the original result, return something else
+    return 'Hello!'
+  }
+  
+  const middlewareEnhancer = applyMiddleware(alwaysReturnHelloMiddleware)
+  const store = createStore(rootReducer, middlewareEnhancer)
+  
+  const dispatchResult = store.dispatch({ type: 'some/action' })
+  console.log(dispatchResult)
+  // log: 'Hello!'
+//--------------------------
+const delayedMessageMiddleware = storeAPI => next => action => {
+    if (action.type === 'todos/todoAdded') {
+      setTimeout(() => {
+        console.log('Added a new todo: ', action.payload)
+      }, 1000)
+    }
+  
+    return next(action)
+  }

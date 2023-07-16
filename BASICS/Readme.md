@@ -38,3 +38,20 @@ Redux middleware provides a third-party extension point between dispatching an a
 
 
 We already saw that you can customize a Redux store using store enhancers. Redux middleware are actually implemented on top of a very special store enhancer that comes built in with Redux, called applyMiddleware.
+
+
+Middleware Use Cases
+
+So, what can we do with middleware? Lots of things!
+
+A middleware can do anything it wants when it sees a dispatched action:
+
+    Log something to the console
+    Set timeouts
+    Make asynchronous API calls
+    Modify the action
+    Pause the action or even stop it entirely
+
+and anything else you can think of.
+
+In particular, middleware are intended to contain logic with side effects. In addition, middleware can modify dispatch to accept things that are not plain action objects. We'll talk more about both of these in Part 6: Async Logic.
