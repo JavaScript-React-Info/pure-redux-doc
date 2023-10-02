@@ -20,8 +20,10 @@ import axios from "axios"
 
 export const FetchPosts = () => {
     return async (dispatch, getState) => {
-        const response = await axios.get("https://jsonplaceholder.typicode.com/todos/1");
+        const response = await axios({method: 'get', url: "https://jsonplaceholder.typicode.com/posts"});
 
         dispatch({type: 'FETCH_POSTS', payload: response.data})
     }
 }
+
+// make api calls in action creator instead of compoennt
