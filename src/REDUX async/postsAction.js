@@ -15,3 +15,5 @@ export const FetchPosts = async () => {
 // property
 // • The action will get sent to the reducer before the data is fetched
 // from the API
+
+// we can load above code in babel and we can observe, the case where it is not returning object
