@@ -1,4 +1,7 @@
-import {createStore} from 'redux'
+import {createStore, applyMiddleware} from 'redux'
+import thunk from 'redux-thunk'
 import { postReducer } from './postReducer'
 
-export const postStore = createStore(postReducer)
+//redux thunk -> it allows action creator to returna an object or function
+
+export const postStore = createStore(postReducer, applyMiddleware(thunk))
