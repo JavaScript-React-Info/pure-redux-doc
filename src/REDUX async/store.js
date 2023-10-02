@@ -1,7 +1,8 @@
 import {createStore, applyMiddleware} from 'redux'
 import store from '../store';
 import { decrement } from './action';
-import { counterReducer } from './reducer'
+import { counterReducer } from './reducer';
+import logger from 'redux-logger'
 
 // middleware catches the action before it hits the reducer
 const myLoggerMiddleWare = (storeAPI) => (next) => (action) => {
@@ -21,8 +22,6 @@ const capAt10 =storeAPI => next => action => {
     } else {
        return next(action)
     } 
-     
-     
 }
 
-export const asyncStore = createStore(counterReducer, applyMiddleware(myLoggerMiddleWare, secondMiddleware, capAt10))
+export const asyncStore = createStore(counterReducer, applyMiddleware(myLoggerMiddleWare, secondMiddleware, capAt10, logger))
