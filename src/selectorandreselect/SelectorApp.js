@@ -3,13 +3,18 @@ import { useState } from "react";
 import { connect } from "react-redux";
 
 const SelectorApp = (props) => {
-    console.log("~~~~selectorapp props", props);
-    const [username, setUsername] = useState('')
+   
 
-    const addUser = () => {
+    const handleUserNameChange = (e)=> {
+        props.dispatch({
+            type: 'CHANGE_USERNAME',
+            payload: e.target.value
+        })
+    }
+
+    const addUser = (e) => {
         props.dispatch({
             type: 'ADD_USER',
-            payload: username
         })
     }
 
@@ -17,8 +22,8 @@ const SelectorApp = (props) => {
         <div>
            <input 
            type='text'
-           value={username}
-           onChange={(e)=> setUsername(e.target.value)}
+           value={props.username}
+           onChange={handleUserNameChange}
            />
            <button onClick={addUser}>Add User</button>
            <ul>
@@ -33,7 +38,8 @@ const SelectorApp = (props) => {
 const mapStateToProp = (state) => {
     console.log("~~~~~~~mapStateToProp", state);
     return {
-        users: state
+        users: state.users,
+        username: state.username
     }
 }
 
