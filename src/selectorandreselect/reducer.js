@@ -1,7 +1,8 @@
 
 const initialState = {
     users: [],
-    userName: ''
+    userName: '',
+    search: ''
 }
 
 const userReducer = (state = initialState, action) => {
@@ -16,6 +17,12 @@ const userReducer = (state = initialState, action) => {
         return {
             ...state,
             userName: action.payload
+        }
+    }
+    case 'CHANGE_SEARCH': {
+        return {
+            ...state,
+            search: action.payload
         }
     }
     default: 
