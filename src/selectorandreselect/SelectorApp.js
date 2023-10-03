@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { connect } from "react-redux";
-import { usersSelector } from "./selector";
+import { filteredUserSelector, usersSelector } from "./selector";
 
 const SelectorApp = (props) => {
    
@@ -51,16 +51,13 @@ console.log("~~~~~~~~~~~SelectorApp", props);
 
 const mapStateToProp = (state) => {
   
-    let filteredUsers = usersSelector(state).filter((user) => {
-        console.log("filtering...........");
-        return user.includes(state.search)
-    })
+console.log("~~~~~~mapstatetoprops", state);
     return {
         users: usersSelector(state), // this is a code duplication,if we try to have this in other compoennt, so better to write function which has global state and return a pice of state.
         // seclector function which return a part of state
         username: state.userName,
         search: state.search,
-        filteredUsers
+        filteredUsers: filteredUserSelector(state)
         
     }
 }
